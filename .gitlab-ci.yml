@@ -1,12 +1,15 @@
-stages:
-  - build
-  - test
-  - deploy
-
+default:
+  image: node:latest
+  
 before_script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
+
+stages:
+  - build
+  - test
+  - deploy
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -19,16 +22,15 @@ cache:
     - cache/Cypress
     - node_modules
 
-install:
-  image: node:latest
+
+build:
   stage: build
   script:
     - npm install
     - npm run build
 
-unit test:
-  image: node:latest
-  needs: ["build"]
+test:
+  needs: [build]
   stage: test
   script:
     - CI=true npm test
@@ -36,8 +38,8 @@ unit test:
 
 end-to-end test:
   image: cypress/base:10
-  needs: ["build"]
   stage: test
+  needs: [build]
   script:
     - npm run test:e2e
   artifacts:
@@ -46,10 +48,10 @@ end-to-end test:
       - cypress/videos/**/*.mp4
       - cypress/screenshots/**/*.png
     expire_in: 1 day
-
+  
 heroku:
-  needs: ["test"]
   stage: deploy
+  needs: [test]
   script:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP --api_key=$HEROKU_API_KEY
