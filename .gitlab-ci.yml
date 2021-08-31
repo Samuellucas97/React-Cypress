@@ -27,17 +27,17 @@ install:
     - npm run build
 
 unit test:
-  needs: [build]
   image: node:latest
   stage: test
+  needs: [build]
   script:
     - CI=true npm test
 
 
 end-to-end test:
-  needs: [build]
   image: cypress/base:10
   stage: test
+  needs: [build]
   script:
     - npm run test:e2e
   artifacts:
