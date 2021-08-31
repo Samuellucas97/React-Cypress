@@ -28,16 +28,16 @@ install:
 
 unit test:
   image: node:latest
-  stage: test
   needs: [build]
+  stage: test
   script:
     - CI=true npm test
 
 
 end-to-end test:
   image: cypress/base:10
-  stage: test
   needs: [build]
+  stage: test
   script:
     - npm run test:e2e
   artifacts:
@@ -48,8 +48,8 @@ end-to-end test:
     expire_in: 1 day
 
 heroku:
-  stage: deploy
   needs: [test]
+  stage: deploy
   script:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP --api_key=$HEROKU_API_KEY
