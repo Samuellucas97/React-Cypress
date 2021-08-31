@@ -1,6 +1,12 @@
 stages:
   - build
   - test
+  - deploy
+
+before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -21,6 +27,7 @@ install:
     - npm run build
 
 unit test:
+  needs: [build]
   image: node:latest
   stage: test
   script:
@@ -28,14 +35,21 @@ unit test:
 
 
 end-to-end test:
+  needs: [build]
   image: cypress/base:10
   stage: test
   script:
     - npm run test:e2e
-  # artifacts:
-  #   when: always
-  #   paths:
-  #     - cypress/videos/**/*.mp4
-  #     - cypress/screenshots/**/*.png
-  #   expire_in: 1 day
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos/**/*.mp4
+      - cypress/screenshots/**/*.png
+    expire_in: 1 day
 
+heroku:
+  stage: deploy
+  needs: [test]
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP --api_key=$HEROKU_API_KEY
