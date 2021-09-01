@@ -9,7 +9,6 @@ before_script:
 stages:
   - build
   - test
-  - deploy
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -53,6 +52,6 @@ heroku:
   stage: deploy
   needs: [test]
   script:
-    - npm install
+    - npm i fsevents@latest -f --save-optional
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP --api_key=$HEROKU_API_KEY
