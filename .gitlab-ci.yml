@@ -49,3 +49,9 @@ end-to-end test:
       - cypress/screenshots/**/*.png
     expire_in: 1 day
   
+heroku:
+  stage: deploy
+  needs: [test]
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP --api_key=$HEROKU_API_KEY
