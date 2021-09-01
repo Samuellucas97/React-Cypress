@@ -9,6 +9,7 @@ before_script:
 stages:
   - build
   - test
+  - deploy
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
