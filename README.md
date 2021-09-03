@@ -49,11 +49,12 @@ $ npm run test:e2e
 #### Available Scripts
 
 | Script        | Description                                                             |
-| ------------- | ----------------------------------------------------------------------- |
-| npm start     | Runs the app in the development mode.                                   |
-| npm run build | Builds the app for production to the `build` folder.                    |
-| npm run cypress:open | Open the Cypress platform to execute the end-to-end tests |
-| npm run cypress:run | Executes the end-to-end tests in headless mode |
-| npm run test:e2e | Starts the application in test mode and executes the end-to-end tests in headless mode  |
+| :-------------: | ----------------------------------------------------------------------- |
+| `npm install`     | Install the project dependencies.                                   |
+| `npm start`     | Runs the app in the development mode.                                   |
+| `npm run build` | Builds the app for production to the `build` folder.                    |
+| `npm run cypress:open` | Open the Cypress platform to execute the end-to-end tests |
+| `npm run cypress:run` | Executes the end-to-end tests in headless mode |
+| `npm run test:e2e` | Starts the application in test mode and executes the end-to-end tests in headless mode  |
 
 
