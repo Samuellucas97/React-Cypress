@@ -1,5 +1,5 @@
 default:
-  image: node:latest
+  image: mhart/alpine-node:10
   
 before_script:
     - apt-get update -qy
@@ -43,11 +43,10 @@ end-to-end test:
   script:
     - npm run test:e2e
   artifacts:
-    when: always
     paths:
       - cypress/videos/**/*.mp4
       - cypress/screenshots/**/*.png
-    expire_in: 1 day
+    expire_in: 30 day
   
 heroku:
   stage: deploy
