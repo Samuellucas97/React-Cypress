@@ -1,0 +1,6 @@
+{
+    "languageTool.language": "en",
+    "[markdown]": {
+        "editor.quickSuggestions": true
+    },
+}
