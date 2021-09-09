@@ -47,11 +47,25 @@ end-to-end test:
       - cypress/videos/**/*.mp4
       - cypress/screenshots/**/*.png
     expire_in: 30 day
-  
-heroku:
+
+staging:
+  needs: [test]
+  stage: deploy
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api_key=$HEROKU_API_KEY
+    - CYPRESS_BASE_URL=https://${HEROKU_APP_STAGING}.herokuapp.com npm run cypress:run
+  artifacts:
+    paths:
+      - cypress/videos/**/*.mp4
+      - cypress/screenshots/**/*.png
+    expire_in: 30 day
+
+
+production:
   stage: deploy
   needs: [test]
+  when: manual
   script:
-    - git push https://$HEROKU_USER:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git HEAD:main
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api_key=$HEROKU_API_KEY
   only:
-    - main
+  - main
