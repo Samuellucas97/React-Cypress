@@ -11,17 +11,11 @@ stages:
   - test
   - deploy
 
-variables:
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
-
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .npm
     - cache
     - node_modules
-
 
 build:
   stage: build
@@ -34,7 +28,6 @@ test:
   stage: test
   script:
     - CI=true npm test
-
 
 end-to-end test:
   stage: test
@@ -58,7 +51,6 @@ staging:
       - cypress/videos/**/*.mp4
       - cypress/screenshots/**/*.png
     expire_in: 30 day
-
 
 production:
   stage: deploy
