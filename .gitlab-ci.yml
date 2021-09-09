@@ -53,7 +53,7 @@ staging:
   stage: deploy
   script:
     - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api_key=$HEROKU_API_KEY
-    - apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+    - sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
     - CYPRESS_BASE_URL=https://${HEROKU_APP_STAGING}.herokuapp.com npm run cypress:run
   artifacts:
     paths:
